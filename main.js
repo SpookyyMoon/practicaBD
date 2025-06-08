@@ -56,7 +56,7 @@ async function consultaSQL(opcionTabla) {
         console.log("Volviendo...");
         break;
     }
-    const [rows] = await conexion.execute(consulta);
+    const [rows] = await conexion.promise().execute(consulta);
     console.log("Resultados de la consulta:");
     console.log(rows);
   } catch (error) {
