@@ -1,10 +1,16 @@
 import readLine from "readline";
+import promptSync from "prompt-sync";
 import mysql from "mysql2";
 
 const rl = readLine.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
+
+const prompt = promptSync();
+function questionHidden(promptTexto) {
+  return prompt.hide(promptTexto);
+}
 
 let conexion;
 
@@ -55,6 +61,9 @@ async function consultaSQL(opcionTabla) {
       case 4:
         console.log("Volviendo...");
         break;
+      default:
+        console.log("¡Has especificado una opción inválida!");
+        break;
     }
     const [rows] = await conexion.promise().execute(consulta);
     console.log("Resultados de la consulta:");
@@ -78,7 +87,7 @@ async function menu() {
       case 1:
         host = await question("Introduce la dirección del host: ");
         usuario = await question("Introduce el usuario: ");
-        contrasena = await question("Introduce la contraseña: ");
+        contrasena = questionHidden("Introduce la contraseña: ");
         await conexionSQL();
         await question("Pulsa enter para volver al menú...");
         break;
